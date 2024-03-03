@@ -141,7 +141,7 @@ impl PortalRouterOps {
                     let adj_traverse_cost = cost_callback(&adj_room_name);
                     if adj_traverse_cost < u8::MAX {
                         open_set.push(PortalRouterOpenSetEntry::new(
-                            open_set_entry.room,
+                            adj_room_name,
                             open_set_entry.g_score + adj_traverse_cost as u32,
                             Some(direction),
                             &goals,
