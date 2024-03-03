@@ -65,6 +65,19 @@ impl PortalRouterOpenSetEntry {
     }
 }
 
+/// Find cost as the lowest manhattan distance to any goal
+fn get_heuristic_cost_to_closest_goal(room: RoomName, goals: &HashSet<RoomName>) -> u32 {
+    let mut lowest_cost = u32::MAX;
+    for goal in goals {
+        let cost =
+            room.x_coord().abs_diff(goal.x_coord()) + room.y_coord().abs_diff(goal.y_coord());
+        if cost < lowest_cost {
+            lowest_cost = cost;
+        }
+    }
+    lowest_cost
+}
+
 /// navigate backwards across our map of where tiles came from to construct a path
 fn resolve_completed_path(
     room_name: RoomName,
@@ -88,19 +101,6 @@ fn resolve_completed_path(
     }
 
     path
-}
-
-/// Find cost as the lowest manhattan distance to any goal
-fn get_heuristic_cost_to_closest_goal(room: RoomName, goals: &HashSet<RoomName>) -> u32 {
-    let mut lowest_cost = u32::MAX;
-    for goal in goals {
-        let cost =
-            room.x_coord().abs_diff(goal.x_coord()) + room.y_coord().abs_diff(goal.y_coord());
-        if cost < lowest_cost {
-            lowest_cost = cost;
-        }
-    }
-    lowest_cost
 }
 
 pub struct PortalRouterOps;
