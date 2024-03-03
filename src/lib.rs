@@ -86,7 +86,7 @@ impl PortalRouterOps {
                 if Some(-direction) == open_set_entry.open_dir {
                     continue;
                 }
-                if let Some(adj_room_name) = open_set_entry.room.checked_add((-direction).into()) {
+                if let Some(adj_room_name) = open_set_entry.room.checked_add(direction.into()) {
                     if visited.contains_key(&adj_room_name) {
                         continue;
                     }
