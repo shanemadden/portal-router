@@ -102,13 +102,13 @@ impl PortalRouterOps {
 
                     let adj_traverse_cost = cost_callback(&adj_room_name);
                     if adj_traverse_cost < u8::MAX {
-	                    open_set.push(PortalRouterOpenSetEntry::new(
-	                        open_set_entry.room,
-	                        open_set_entry.g_score + adj_traverse_cost as u32,
-	                        Some(direction),
-	                        &goals,
-	                    ));
-	                }
+                        open_set.push(PortalRouterOpenSetEntry::new(
+                            open_set_entry.room,
+                            open_set_entry.g_score + adj_traverse_cost as u32,
+                            Some(direction),
+                            &goals,
+                        ));
+                    }
                 }
             }
         }
@@ -141,14 +141,12 @@ impl PortalRouterOps {
         path
     }
 
-    /// Find cost as the lowest linear distance to any goal
+    /// Find cost as the lowest manhattan distance to any goal
     fn get_heuristic_cost_to_closest_goal(room: RoomName, goals: &HashSet<RoomName>) -> u32 {
         let mut lowest_cost = u32::MAX;
         for goal in goals {
-            let cost = std::cmp::min(
-                room.x_coord().abs_diff(goal.x_coord()),
-                room.y_coord().abs_diff(goal.y_coord()),
-            );
+            let cost =
+                room.x_coord().abs_diff(goal.x_coord()) + room.y_coord().abs_diff(goal.y_coord());
             if cost < lowest_cost {
                 lowest_cost = cost;
             }
